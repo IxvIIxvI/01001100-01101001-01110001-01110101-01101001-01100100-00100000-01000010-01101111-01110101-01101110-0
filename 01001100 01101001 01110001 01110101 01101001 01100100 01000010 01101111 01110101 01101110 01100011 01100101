@@ -2197,7 +2197,7 @@ local Enabled = true
 		end,
 		["HoverText"] = "Shows where all the beds are in the match."
 	})
-	
+	local UserInputService = game:GetService("UserInputService")
 	local infFly = windowapi.CreateButton({
 		["Name"] = "InfFly",
 		["Tab"] = "Blatant",
@@ -3319,15 +3319,47 @@ local Enabled = true
                         bedwars["BalloonController"].enableBalloonPhysics = oldenable
                         bedwars["BalloonController"].hookBalloon = oldhook
                     end
-                    createinfo("FloatDisabler", "Float check disabled until you die", 10, notifyFrame)
+                    createinfo("FloatDisabler", "Float check disabled until you die", 3, notifyFrame)
                     bedwars["BalloonController"].inflateBalloon()
                 else
-                    createinfo("FloatDisabler", "No Balloon Found", 10, notifyFrame)
+                    createinfo("FloatDisabler", "No Balloon Found", 3, notifyFrame)
                 end
 			end
 		end,
 	})
-	
+	local SmallSwords = windowapi.CreateButton({
+		["Name"] = "SmallSwords",
+		["Tab"] = "Render",
+		["Function"] = function(callback)
+			if callback then
+				repeat task.wait() until game:IsLoaded()
+				local SmallSwordsToggle = true
+				repeat
+					task.wait()
+					for i, v in pairs(game:GetService("Workspace").Camera.Viewmodel:GetChildren()) do
+						if (v:IsA("Accessory")) then
+							if v:FindFirstChild("Handle").Anchored == true then
+								break
+							else
+								if v:FindFirstChild("Handle") then
+									v.Handle.Size =  v.Handle.Size / 3
+									v:FindFirstChild("Handle").Anchored = true
+								end
+								if v:FindFirstChild("Handle"):FindFirstChild("Neon") then
+									v:FindFirstChild("Handle"):FindFirstChild("Neon"):Destroy()
+								end
+								if v:FindFirstChild("Handle"):FindFirstChild("gem") then
+									v:FindFirstChild("Handle"):FindFirstChild("gem"):Destroy()
+								end
+							end
+						end
+					end
+				until (SmallSwordsToggle == false)
+			else
+				createinfo("Swords", "Toggled Off Next Round", 3, notifyFrame)
+			end
+		end,
+	})	
 	local lightingsettings = {}
 	local lightingconnection
 	local lightingchanged = false

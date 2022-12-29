@@ -2861,16 +2861,25 @@ local Enabled = true
 		["Function"] = function(callback)
 			local players = game.Players:GetPlayers()
 			if callback then
-				for i,v in pairs(players) do
-					espHighlight = Instance.new("Highlight")
-					espHighlight.Name = v.Name.."_highlight_insult"
-					espHighlight.FillTransparency = 0.5
-					espHighlight.FillColor = Color3.fromRGB(0, 179, 255)
-					espHighlight.OutlineColor = Color3.fromRGB(0, 110, 255)
-					espHighlight.OutlineTransparency = 0
-					espHighlight.Parent = v.Character
-				end
+                _G.ChamsToggle = true
+                repeat
+                    task.wait()
+                    for i, v in pairs(players) do
+                        if v.Character:FindFirstChild((v.Name).."_highlight_insult") then
+                            break
+                        else
+                            espHighlight = Instance.new("Highlight")
+                            espHighlight.Name = v.Name.."_highlight_insult"
+                            espHighlight.FillTransparency = 0.5
+                            espHighlight.FillColor = Color3.fromRGB(0, 179, 255)
+                            espHighlight.OutlineColor = Color3.fromRGB(0, 110, 255)
+                            espHighlight.OutlineTransparency = 0
+                            espHighlight.Parent = v.Character
+                        end
+                    end
+                until (_G.ChamsToggle == false)
 			else
+                _G.ChamsToggle = false
 				for i,v in pairs(players) do
 					if v.Character:FindFirstChildWhichIsA("Highlight") then
 						local highlight = v.Character:FindFirstChildWhichIsA("Highlight")

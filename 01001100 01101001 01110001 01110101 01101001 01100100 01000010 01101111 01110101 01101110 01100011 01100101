@@ -3370,13 +3370,17 @@ local Enabled = true
 		["Tab"] = "Blatant",
 		["Function"] = function(callback)
 			if callback then
-				if GetMatchState() ~= 1 then
-					repeat task.wait() until GetMatchState() == 1
-				end
-				_G.TP = true
-                while wait(0.005) and _G.TP == true do
-                       game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 2
-                    game:GetService("Workspace").Gravity = 0
+                if game:GetService("Workspace").Camera.Viewmodel:FindFirstChild("fireball") and game:GetService("ReplicatedStorage"):FindFirstChild("Inventories"):FindFirstChild(lplr.Name):FindFirstChild("fireball") then
+                    if GetMatchState() ~= 1 then
+                        repeat task.wait() until GetMatchState() == 1
+                    end
+                    _G.TP = true
+                    while wait(0.005) and _G.TP == true do
+                           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 2
+                        game:GetService("Workspace").Gravity = 0
+                    end
+                else
+                    createinfo("FireBallDisabler", "No fireball Found", 10, notifyFrame)
                 end
             else
                 _G.TP = false
